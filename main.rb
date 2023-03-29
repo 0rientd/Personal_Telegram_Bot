@@ -10,8 +10,8 @@ Telegram::Bot::Client.run(token) do |bot|
 	puts 'Aguardando mensagens...'
 
   bot.listen do |message|
-		puts "Mensagem recebida: #{message.text}" if message.text?
-		
+		puts "Mensagem recebida de #{message.chat.username}: #{message.text}" unless message.text.nil?
+
 		case message.text
 		when '/start'
 			# See more: https://core.telegram.org/bots/api#replykeyboardmarkup

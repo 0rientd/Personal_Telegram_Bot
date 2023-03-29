@@ -8,9 +8,10 @@ token = File.read('token.txt').strip
 Telegram::Bot::Client.run(token) do |bot|
 	puts 'Bot iniciado com sucesso!'
 	puts 'Aguardando mensagens...'
-	puts "Mensagem recebida: #{message.text}" if message.text?
 
   bot.listen do |message|
+		puts "Mensagem recebida: #{message.text}" if message.text?
+		
 		case message.text
 		when '/start'
 			# See more: https://core.telegram.org/bots/api#replykeyboardmarkup

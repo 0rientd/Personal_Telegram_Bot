@@ -3,9 +3,13 @@
 require 'rubygems'
 require 'telegram/bot'
 
-token = File.read('token.txt')
+token = File.read('token.txt').strip
 
 Telegram::Bot::Client.run(token) do |bot|
+	puts 'Bot iniciado com sucesso!'
+	puts 'Aguardando mensagens...'
+	puts "Mensagem recebida: #{message.text}" if message.text?
+
   bot.listen do |message|
 		case message.text
 		when '/start'
@@ -21,7 +25,7 @@ Telegram::Bot::Client.run(token) do |bot|
 			bot.api.send_message(chat_id: message.chat.id, text: "Olá! Seja bem vindo. Eu sou o bot do 0rientd. Como posso te ajudar?", reply_markup: opcoes)
 
 		when 'Quero entrar em contato.'
-			mensagem = "Que bom! Você pode entrar em contato comigo pelo seguinte email: carlos.henrique@0rientd.dev.br"
+			mensagem = 'Que bom! Você pode entrar em contato pelo seguinte email: carlos.henrique@0rientd.dev.br'
 
 			bot.api.send_message(chat_id: message.chat.id, text: mensagem)
 
@@ -31,9 +35,9 @@ Telegram::Bot::Client.run(token) do |bot|
 			bot.api.send_message(chat_id: message.chat.id, text: mensagem)
 		
 		when 'Quais projetos ele já fez?'
-			mensagem1 = "Alguns projetos são de código privado e outros são de código aberto. Você pode ver alguns deles no meu GitHub: https://github.com/0rientd"
-			mensagem2 = "Um projeto que eu fiz recentemente foi o 0rientd Bot. Ele é um bot de Telegram que eu criei para ajudar as pessoas a conhecerem um pouco mais sobre mim."
-			mensagem3 = "Há um projeto em andamento que é um bot para Telegram onde um web scrapper coleta informações do site da Nintendo, XBox e PlayStation e envia para o usuário. O projeto encontra-se já em produção e você pode ver neste link: https://t.me/promobytenintendo"
+			mensagem1 = 'Alguns projetos são de código privado e outros são de código aberto. Você pode ver alguns deles no GitHub: https://github.com/0rientd'
+			mensagem2 = 'Um projeto feito recentemente foi o 0rientd Bot. Ele é um bot de Telegram que eu criei para ajudar as pessoas a conhecerem um pouco mais sobre mim.'
+			mensagem3 = 'Há um projeto em andamento que é um bot para Telegram onde um web scrapper coleta informações do site da Nintendo, XBox e PlayStation e envia para o usuário. O projeto encontra-se já em produção e você pode ver neste link: https://t.me/promobytenintendo'
 
 			bot.api.send_message(chat_id: message.chat.id, text: mensagem1)
 			bot.api.send_message(chat_id: message.chat.id, text: mensagem2)

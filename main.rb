@@ -5,12 +5,17 @@ require 'telegram/bot'
 
 token = File.read('token.txt').strip
 
+def checa_username(message)
+	return message.chat.first_name if	(message.chat.username.nil? || message.chat.username == '')
+	return message.chat.username
+end
+
 Telegram::Bot::Client.run(token) do |bot|
 	puts 'Bot iniciado com sucesso!'
 	puts 'Aguardando mensagens...'
 
   bot.listen do |message|
-		puts "Mensagem recebida de #{message.chat.username}: #{message.text}" unless message.text.nil?
+		puts "Mensagem recebida de #{checa_username(message)}: #{message.text}" unless message.text.nil?
 
 		case message.text
 		when '/start'
@@ -44,7 +49,7 @@ Telegram::Bot::Client.run(token) do |bot|
 			bot.api.send_message(chat_id: message.chat.id, text: mensagem2)
 			bot.api.send_message(chat_id: message.chat.id, text: mensagem3)
 
-		when '/stop' || 'Nada mais. Obrigado!'
+		when '/stop', 'Nada mais. Obrigado!'
 			# See more: https://core.telegram.org/bots/api#replykeyboardremove
 			kb = Telegram::Bot::Types::ReplyKeyboardRemove.new(remove_keyboard: true)
 
